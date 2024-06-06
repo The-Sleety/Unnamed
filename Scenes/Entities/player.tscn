@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmecwmjwipjoo"]
+
+[ext_resource type="Script" path="res://Scripts/Entities/Player/player.gd" id="1_yo1km"]
+[ext_resource type="Script" path="res://Scripts/Entities/Player/SmoothCamera.gd" id="2_eranl"]
+[ext_resource type="FontFile" uid="uid://dgg5pkqyhta4a" path="res://Assets/Font/TooMuchInk.ttf" id="2_m0ejo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w6kni"]
+size = Vector2(32, 32)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_yo1km")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="OxyBar" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -102.0
+offset_right = 327.0
+grow_vertical = 0
+
+[node name="Oxygen" type="Label" parent="UI/OxyBar"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 42.0
+offset_right = 112.0
+offset_bottom = 74.0
+theme_override_fonts/font = ExtResource("2_m0ejo")
+theme_override_font_sizes/font_size = 32
+text = "oxygen : %000"
+
+[node name="SmoothCamera" type="Camera2D" parent="."]
+zoom = Vector2(1.25, 1.25)
+limit_left = 0
+limit_bottom = 720
+position_smoothing_enabled = true
+script = ExtResource("2_eranl")
+
+[node name="PlayerSprite" type="ColorRect" parent="."]
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(16, 16)
+shape = SubResource("RectangleShape2D_w6kni")
+
+[node name="Gun" type="Node2D" parent="."]
+
+[node name="Offset" type="Node2D" parent="Gun"]
+position = Vector2(16, 16)
+
+[node name="GunSprite" type="ColorRect" parent="Gun/Offset"]
+offset_top = -2.0
+offset_right = 60.0
+offset_bottom = 3.0
+color = Color(1, 0, 0, 1)
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.15
+
+[node name="DashAgainTimer" type="Timer" parent="."]
+wait_time = 1.25
+
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashAgainTimer" to="." method="_on_dash_again_timer_timeout"]

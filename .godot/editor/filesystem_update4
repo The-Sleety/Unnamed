@@ -1,0 +1,4 @@
+res://Scenes/Worlds/testing_scene.tscn
+res://Scenes/Prefabs/tile_map.tscn
+res://Scripts/Entities/Player/player.gd
+res://Scenes/Entities/player.tscn
